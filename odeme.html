@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ödeme — LOOMÉ</title>
+  <meta name="description" content="LOOMÉ güvenli ödeme sayfası.">
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+  <link rel="stylesheet" href="assets/css/fonts.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-page="odeme">
+
+  <main id="icerik">
+
+    <section class="page-head">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Sayfa yolu">
+          <a href="index.html">Ana Sayfa</a><span><a href="sepet.html">Sepetim</a></span><span>Ödeme</span>
+        </nav>
+        <h1>Güvenli Ödeme</h1>
+      </div>
+    </section>
+
+    <section class="section--tight" style="padding-top: 48px; padding-bottom: 100px;">
+      <div class="container" id="checkoutWrap">
+        <div class="checkout-layout">
+
+          <form id="checkoutForm" novalidate>
+            <div class="pay-demo-note">Bu sayfa bir tasarım önizlemesidir — gerçek ödeme alınmaz. Canlıya çıkmadan önce iyzico, PayTR veya Stripe gibi bir ödeme altyapısı bağlanmalıdır.</div>
+
+            <div class="form-section">
+              <h3><span class="step-no">1</span>İletişim Bilgileri</h3>
+              <div class="form-grid">
+                <div class="field full">
+                  <label for="coEmail">E-posta</label>
+                  <input type="email" id="coEmail" autocomplete="email" required>
+                  <div class="field-err">Geçerli bir e-posta adresi girin.</div>
+                </div>
+                <div class="field">
+                  <label for="coName">Ad</label>
+                  <input type="text" id="coName" autocomplete="given-name" required>
+                  <div class="field-err">Bu alan zorunludur.</div>
+                </div>
+                <div class="field">
+                  <label for="coSurname">Soyad</label>
+                  <input type="text" id="coSurname" autocomplete="family-name" required>
+                  <div class="field-err">Bu alan zorunludur.</div>
+                </div>
+                <div class="field full">
+                  <label for="coPhone">Telefon</label>
+                  <input type="tel" id="coPhone" autocomplete="tel" placeholder="05__ ___ __ __" required>
+                  <div class="field-err">Bu alan zorunludur.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-section">
+              <h3><span class="step-no">2</span>Teslimat Adresi</h3>
+              <div class="form-grid">
+                <div class="field full">
+                  <label for="coAddress">Adres</label>
+                  <textarea id="coAddress" autocomplete="street-address" required></textarea>
+                  <div class="field-err">Bu alan zorunludur.</div>
+                </div>
+                <div class="field">
+                  <label for="coCity">İl</label>
+                  <input type="text" id="coCity" autocomplete="address-level1" required>
+                  <div class="field-err">Bu alan zorunludur.</div>
+                </div>
+                <div class="field">
+                  <label for="coDistrict">İlçe</label>
+                  <input type="text" id="coDistrict" autocomplete="address-level2" required>
+                  <div class="field-err">Bu alan zorunludur.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-section">
+              <h3><span class="step-no">3</span>Kart Bilgileri</h3>
+              <div class="form-grid">
+                <div class="field full">
+                  <label for="cardName">Kart Üzerindeki İsim</label>
+                  <input type="text" id="cardName" autocomplete="cc-name" required>
+                  <div class="field-err">Bu alan zorunludur.</div>
+                </div>
+                <div class="field full">
+                  <label for="cardNo">Kart Numarası</label>
+                  <input type="text" id="cardNo" inputmode="numeric" autocomplete="cc-number" placeholder="0000 0000 0000 0000" required>
+                  <div class="field-err">16 haneli kart numarası girin.</div>
+                </div>
+                <div class="field">
+                  <label for="cardExp">Son Kullanma (AA/YY)</label>
+                  <input type="text" id="cardExp" inputmode="numeric" autocomplete="cc-exp" placeholder="AA/YY" required>
+                  <div class="field-err">AA/YY biçiminde girin.</div>
+                </div>
+                <div class="field">
+                  <label for="cardCvc">CVC</label>
+                  <input type="text" id="cardCvc" inputmode="numeric" autocomplete="cc-csc" placeholder="000" required>
+                  <div class="field-err">3 haneli güvenlik kodu girin.</div>
+                </div>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn--dark btn--block">Siparişi Tamamla</button>
+            <div class="secure-note">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" style="width:14px;height:14px"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+              Bilgileriniz 256-bit SSL ile şifrelenir
+            </div>
+          </form>
+
+          <aside class="checkout-summary">
+            <div class="summary-card">
+              <h3>Sipariş Özeti</h3>
+              <div class="checkout-items" id="checkoutItems"></div>
+              <div id="checkoutTotals"></div>
+            </div>
+          </aside>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
