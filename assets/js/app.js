@@ -13,7 +13,7 @@
   const $$ = (s, c) => Array.from((c || document).querySelectorAll(s));
   const PAGE = document.body.dataset.page || '';
 
-  const fmt = (n) => n.toLocaleString('tr-TR') + ' ' + CFG.currency;
+  const fmt = (n) => n.toLocaleString('tr-TR') + ' ' + CFG.currency;
   const trLower = (s) => (s || '').toLocaleLowerCase('tr-TR');
   const getProduct = (id) => DATA.products.find((p) => p.id === id);
 
@@ -33,8 +33,8 @@
     },
   };
 
-  // Bozuk/eski biçimli değerlere karşı tür doğrulaması — aksi halde
-  // geçerli ama yanlış türde bir JSON tüm uygulamayı çökertebilir.
+  // Bozuk/eski biçimli localStorage değerlerine karşı tür doğrulaması —
+  // aksi halde geçerli ama yanlış türde bir JSON tüm uygulamayı çökertebilir.
   let cart = store.get('loome_cart', []);
   if (!Array.isArray(cart)) cart = [];
   let wishlist = store.get('loome_wishlist', []);
@@ -85,26 +85,46 @@
 
   window.addEventListener('error', function (e) {
     const t = e.target;
-    if (t && t.tagName === 'IMG' && t.src !== PLACEHOLDER) {
+    // Logo görseli kendi yedeğine (yazı-logo) düşer; yer tutucuya çevirme.
+    if (t && t.tagName === 'IMG' && !t.classList.contains('logo-img') && t.src !== PLACEHOLDER) {
       t.src = PLACEHOLDER;
     }
   }, true);
 
-  /* ---------- Logo bileşeni ---------- */
-  const logoHTML = (extraCls) =>
-    '<a class="logo ' + (extraCls || '') + '" href="index.html" aria-label="LOOMÉ ana sayfa">' +
-      '<span class="logo-word">LOOM<span class="logo-e">E' +
-        '<svg class="logo-leaf" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 20C4 10.5 10.5 4 20 4c0 9.5-6.5 16-16 16Z"/><path d="M4 20C7.5 14 12 9.5 17.5 6.5" stroke="#FBF9F4" stroke-width="1.4" fill="none" stroke-linecap="round"/></svg>' +
-      '</span></span>' +
-      '<svg class="logo-smile" viewBox="0 0 100 12" fill="none" aria-hidden="true"><path d="M4 2c14 8.5 78 8.5 92 0" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>' +
+  /* ---------- Logo bileşeni ----------
+     Tek koordinat sisteminde çizilmiş SVG yazı-logo (asla "yamuk" olmaz).
+     Header'da, varsa gerçek logo görseli (CFG.logo veya assets/img/logo.png)
+     kullanılır; dosya yoksa otomatik olarak yazı-logoya düşer. */
+  const wordmarkSVG =
+    '<svg class="logo-mark" viewBox="0 0 232 76" fill="none" aria-hidden="true">' +
+      '<text x="112" y="49" text-anchor="middle" class="logo-text" fill="currentColor">LOOME</text>' +
+      // "É" aksanı yerine geçen yaprak
+      '<path class="logo-leaf-p" fill="currentColor" d="M182 22C182 11 191 3 203 3c0 11-9 19-21 19Z"/>' +
+      '<path d="M182.5 21.5C185.5 15 190.5 9.5 197 6.5" stroke="var(--leaf-vein, #FBF9F4)" stroke-width="1.3" fill="none" stroke-linecap="round"/>' +
+      // gülümseme
+      '<path class="logo-smile-p" d="M56 62C90 74 142 74 176 62" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round"/>' +
+    '</svg>';
+
+  const logoHTML = (extraCls, forceWordmark) => {
+    const wordmark = '<span class="logo-word" aria-hidden="true">' + wordmarkSVG + '</span>';
+    if (forceWordmark) {
+      return '<a class="logo logo--wordmark ' + (extraCls || '') + '" href="index.html" aria-label="LOOMÉ ana sayfa">' + wordmark + '</a>';
+    }
+    const src = CFG.logo || 'assets/img/logo.png';
+    return '<a class="logo ' + (extraCls || '') + '" href="index.html" aria-label="LOOMÉ ana sayfa">' +
+      '<img class="logo-img" src="' + src + '" alt="LOOMÉ" ' +
+        'onerror="var a=this.closest(\'.logo\');if(a){a.classList.add(\'logo--wordmark\');}this.remove();">' +
+      wordmark +
     '</a>';
+  };
 
   /* ---------- Site iskeleti (header + footer + katmanlar) ---------- */
   const NAV_LINKS = [
-    { href: 'urun.html?id=yuzen-kupa', label: 'Yüzen Kupa', match: ['urun'] },
-    { href: 'urunler.html', label: 'Mağaza', match: ['urunler'] },
+    { href: 'urunler.html', label: 'Koleksiyon', match: ['urunler', 'urun'] },
+    { href: 'urunler.html?kategori=banyo', label: 'Banyo' },
+    { href: 'urunler.html?kategori=yatak', label: 'Yatak' },
+    { href: 'urunler.html?kategori=giyim', label: 'Ev Giyim' },
     { href: 'hakkimizda.html', label: 'Hikayemiz', match: ['hakkimizda'] },
-    { href: 'iletisim.html', label: 'İletişim', match: ['iletisim'] },
   ];
 
   function navHTML() {
@@ -136,6 +156,8 @@
         '</div>' +
         '<nav aria-label="Mobil menü">' +
           NAV_LINKS.map((l) => '<a href="' + l.href + '">' + l.label + icon('arrow-right') + '</a>').join('') +
+          '<a href="urunler.html?kategori=yasam">Yaşam' + icon('arrow-right') + '</a>' +
+          '<a href="iletisim.html">İletişim' + icon('arrow-right') + '</a>' +
         '</nav>' +
         '<div class="mobile-menu-foot">destek@loome.com.tr · +90 (212) 000 00 00</div>' +
       '</div>';
@@ -146,19 +168,20 @@
       '<footer class="site-footer">' +
         '<div class="container">' +
           '<div class="footer-main">' +
-            '<div class="footer-brand">' + logoHTML('logo--footer') +
-              '<p>Sıradan anları küçük sahnelere dönüştüren, el işçiliğiyle üretilen dekoratif objeler.</p>' +
+            '<div class="footer-brand">' + logoHTML('logo--footer', true) +
+              '<p>Doğal liflerden, geleneksel tezgâhlarda, yarınlara saygıyla dokunan ev tekstili.</p>' +
               '<div class="footer-social">' +
                 '<a href="#" aria-label="Instagram">' + icon('instagram') + '</a>' +
                 '<a href="#" aria-label="Facebook">' + icon('facebook') + '</a>' +
                 '<a href="#" aria-label="Pinterest">' + icon('pinterest') + '</a>' +
               '</div>' +
             '</div>' +
-            '<div class="footer-col"><h4>Mağaza</h4><ul>' +
-              '<li><a href="urun.html?id=yuzen-kupa">Yüzen Kupa</a></li>' +
+            '<div class="footer-col"><h4>Koleksiyon</h4><ul>' +
               '<li><a href="urunler.html">Tüm Ürünler</a></li>' +
-              '<li><a href="sepet.html">Sepetim</a></li>' +
-              '<li><a href="favoriler.html">Favorilerim</a></li>' +
+              '<li><a href="urunler.html?kategori=banyo">Banyo</a></li>' +
+              '<li><a href="urunler.html?kategori=yatak">Yatak</a></li>' +
+              '<li><a href="urunler.html?kategori=giyim">Ev Giyim</a></li>' +
+              '<li><a href="urunler.html?kategori=yasam">Yaşam</a></li>' +
             '</ul></div>' +
             '<div class="footer-col"><h4>Kurumsal</h4><ul>' +
               '<li><a href="hakkimizda.html">Hikayemiz</a></li>' +
@@ -168,7 +191,7 @@
               '<li><a href="yasal.html#iade">İade &amp; Değişim</a></li>' +
             '</ul></div>' +
             '<div class="footer-col"><h4>Bize Ulaşın</h4><ul class="footer-contact">' +
-              '<li>' + icon('pin') + '<span>Tasarım Atölyesi<br>İstanbul</span></li>' +
+              '<li>' + icon('pin') + '<span>Atölye: Buldan, Denizli<br>Ofis: Nişantaşı, İstanbul</span></li>' +
               '<li>' + icon('mail') + '<span>destek@loome.com.tr</span></li>' +
               '<li>' + icon('phone') + '<span>+90 (212) 000 00 00<br>Hafta içi 09.00 – 18.00</span></li>' +
             '</ul></div>' +
@@ -200,7 +223,7 @@
             '<button class="icon-btn" id="searchClose" aria-label="Aramayı kapat">' + icon('close') + '</button>' +
           '</div>' +
           '<div class="search-hint">Popüler: ' +
-            ['Kupa', 'Kahve', 'Dekor', 'Hediye'].map((t) => '<button type="button" data-term="' + t + '">' + t + '</button>').join('') +
+            ['Keten', 'Havlu', 'Nevresim', 'Bornoz', 'Mum'].map((t) => '<button type="button" data-term="' + t + '">' + t + '</button>').join('') +
           '</div>' +
           '<div class="search-results" id="searchResults"></div>' +
         '</div>' +
@@ -317,7 +340,7 @@
     if (!cart.length) {
       items.innerHTML =
         '<div class="drawer-empty">' + icon('bag') +
-          '<p>Sepetiniz henüz boş.<br>Sizi gülümsetecek parçalara göz atın.</p>' +
+          '<p>Sepetiniz henüz boş.<br>Sizin için dokuduklarımıza göz atın.</p>' +
           '<a class="btn btn--dark" href="urunler.html">Alışverişe Başla</a>' +
         '</div>';
       foot.innerHTML = '';
@@ -506,6 +529,21 @@
 
   /* ---------- Ana sayfa ---------- */
   function initHome() {
+    const colGrid = $('#collectionGrid');
+    if (colGrid) {
+      colGrid.innerHTML = DATA.collections.map((c, i) =>
+        '<a class="collection-card reveal" style="--d:' + (i * 0.1) + 's" href="urunler.html?kategori=' + c.id + '">' +
+          '<img src="' + c.img + '" alt="' + c.name + ' koleksiyonu" loading="lazy">' +
+          '<div class="collection-info"><h3>' + c.name + '</h3><p>' + c.tagline + '</p>' +
+          '<span class="fake-link">Keşfet ' + icon('arrow-right') + '</span></div>' +
+        '</a>'
+      ).join('');
+    }
+
+    const featured = DATA.products.filter((p) => p.featured).slice(0, 8);
+    const fGrid = $('#featuredGrid');
+    if (fGrid) renderProductGrid(fGrid, featured);
+
     // Yorumlar
     const track = $('#testimonialTrack');
     const dots = $('#testimonialDots');
@@ -535,6 +573,23 @@
       }));
     }
 
+    // Instagram şeridi — mevcut görsellerden derlenir
+    const insta = $('#instaGrid');
+    if (insta) {
+      const imgs = [
+        'assets/img/products/keten-ruya-nevresim.jpg',
+        'assets/img/products/fulya-mum.jpg',
+        'assets/img/sections/cat-banyo.jpg',
+        'assets/img/products/zeytin-kimono.jpg',
+        'assets/img/products/yosun-battaniye.jpg',
+        'assets/img/sections/editorial.jpg',
+      ];
+      insta.innerHTML = imgs.map((src) =>
+        '<a class="insta-item" href="#" aria-label="Instagram gönderisi">' +
+          '<img src="' + src + '" alt="LOOMÉ Instagram" loading="lazy">' + icon('instagram') +
+        '</a>'
+      ).join('');
+    }
   }
 
   /* ---------- Mağaza / Ürünler ---------- */
@@ -578,17 +633,14 @@
       }
 
       const col = DATA.collections.find((c) => c.id === activeCat);
-      if (heading) heading.textContent = term ? '“' + term + '”' : (col ? col.name : 'Mağaza');
+      if (heading) heading.textContent = term ? '“' + term + '”' : (col ? col.name : 'Koleksiyon');
       if (tagline) tagline.textContent = term
         ? 'Arama sonuçları'
-        : (col ? col.tagline : 'Şimdilik tek bir yıldızımız var — yakında yeni parçalar geliyor.');
-      document.title = (col ? col.name : 'Mağaza') + ' — LOOMÉ';
+        : (col ? col.tagline : 'Evinize dokunan tüm parçalar — özenle, tek tek dokundu.');
+      document.title = (col ? col.name : 'Koleksiyon') + ' — LOOMÉ';
     }
 
-    if (pills && CATS.length <= 2) {
-      // Tek kategori varken filtreye gerek yok
-      pills.hidden = true;
-    } else if (pills) {
+    if (pills) {
       pills.innerHTML = CATS.map((c) =>
         '<button class="filter-pill' + (c.id === activeCat ? ' active' : '') + '" data-cat="' + c.id + '">' + c.name + '</button>'
       ).join('');
@@ -619,13 +671,11 @@
     let size = p.sizes ? p.sizes[0] : null;
 
     const catName = (DATA.collections.find((c) => c.id === p.cat) || {}).name || '';
-    const images = p.gallery && p.gallery.length
-      ? p.gallery
-      : [p.img].concat(p.alt ? [p.alt] : []);
+    const images = [p.img].concat(p.alt ? [p.alt] : []);
 
     wrap.innerHTML =
       '<nav class="breadcrumb" style="justify-content:flex-start; margin-bottom:28px;" aria-label="Sayfa yolu">' +
-        '<a href="index.html">Ana Sayfa</a><span><a href="urunler.html">Mağaza</a></span>' +
+        '<a href="index.html">Ana Sayfa</a><span><a href="urunler.html">Koleksiyon</a></span>' +
         '<span><a href="urunler.html?kategori=' + p.cat + '">' + catName + '</a></span><span>' + p.name + '</span>' +
       '</nav>' +
       '<div class="pdp">' +
@@ -717,20 +767,14 @@
     const firstPanel = $('.accordion-item.open .accordion-panel', wrap);
     if (firstPanel) firstPanel.style.maxHeight = firstPanel.scrollHeight + 'px';
 
-    // Benzer ürünler (hiç yoksa bölümü tamamen gizle)
+    // Benzer ürünler
     const relGrid = $('#relatedGrid');
     if (relGrid) {
       let rel = DATA.products.filter((x) => x.cat === p.cat && x.id !== p.id);
       if (rel.length < 4) {
         rel = rel.concat(DATA.products.filter((x) => x.cat !== p.cat && x.id !== p.id));
       }
-      rel = rel.slice(0, 4);
-      const relSection = $('#relatedSection');
-      if (!rel.length) {
-        if (relSection) relSection.hidden = true;
-      } else {
-        renderProductGrid(relGrid, rel);
-      }
+      renderProductGrid(relGrid, rel.slice(0, 4));
     }
   }
 
@@ -1036,9 +1080,6 @@
       if (btn.dataset.act === 'dec') setQty(id, size, item.qty - 1);
       if (btn.dataset.act === 'remove') removeFromCart(id, size);
     });
-
-    // Hızlı satın alma butonları (ana sayfa vb.)
-    $$('[data-add]').forEach((b) => b.addEventListener('click', () => addToCart(b.dataset.add, 1)));
 
     // Header gölgesi
     const header = $('#siteHeader');
