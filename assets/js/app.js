@@ -33,9 +33,14 @@
     },
   };
 
+  // Bozuk/eski biçimli değerlere karşı tür doğrulaması — aksi halde
+  // geçerli ama yanlış türde bir JSON tüm uygulamayı çökertebilir.
   let cart = store.get('loome_cart', []);
+  if (!Array.isArray(cart)) cart = [];
   let wishlist = store.get('loome_wishlist', []);
+  if (!Array.isArray(wishlist)) wishlist = [];
   let promo = store.get('loome_promo', null);
+  if (typeof promo !== 'string' || !CFG.promoCodes[promo]) promo = null;
 
   /* ---------- İkon kütüphanesi ---------- */
   const ICONS = {
@@ -479,9 +484,13 @@
   /* ---------- Akordeon ---------- */
   function initAccordions(scope) {
     $$('.accordion-item', scope).forEach((item) => {
+      // Aynı öğeye iki kez bağlanmayı engelle (aksi halde tıklama
+      // açıp hemen kapatır ve panel hiç görünmez).
+      if (item.dataset.accBound) return;
       const trigger = $('.accordion-trigger', item);
       const panel = $('.accordion-panel', item);
       if (!trigger || !panel) return;
+      item.dataset.accBound = '1';
       trigger.addEventListener('click', () => {
         const isOpen = item.classList.contains('open');
         item.classList.toggle('open', !isOpen);
