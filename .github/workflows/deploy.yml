@@ -1,0 +1,45 @@
+name: LOOMÉ — GitHub Pages Yayını
+
+# Bu akış, statik siteyi (kök dizin) GitHub Pages'e yayınlar.
+# İlk çalışmasında Pages'i otomatik etkinleştirir; ayrı bir ayar gerekmez.
+
+on:
+  push:
+    branches:
+      - claude/ecommerce-site-design-p6pyjd
+  workflow_dispatch:
+
+# Pages yayını için gereken izinler
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Aynı anda tek yayın çalışsın; devam eden yayını iptal etme
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Depoyu al
+        uses: actions/checkout@v4
+
+      - name: Pages'i yapılandır (yoksa etkinleştir)
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - name: Site dosyalarını paketle
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+      - name: Pages'e yayınla
+        id: deployment
+        uses: actions/deploy-pages@v4

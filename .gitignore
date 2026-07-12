@@ -1,0 +1,4 @@
+# Bağımlılıklar ve geçici dosyalar
+node_modules/
+.DS_Store
+*.log
