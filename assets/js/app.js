@@ -168,7 +168,7 @@
       '<footer class="site-footer">' +
         '<div class="container">' +
           '<div class="footer-main">' +
-            '<div class="footer-brand">' + logoHTML('logo--footer', true) +
+            '<div class="footer-brand">' + logoHTML('logo--footer') +
               '<p>Doğal liflerden, geleneksel tezgâhlarda, yarınlara saygıyla dokunan ev tekstili.</p>' +
               '<div class="footer-social">' +
                 '<a href="#" aria-label="Instagram">' + icon('instagram') + '</a>' +

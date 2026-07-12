@@ -319,6 +319,8 @@ h1, h2, h3, .font-display {
   letter-spacing: 6px;
 }
 .logo--footer { margin-bottom: 12px; }
+.logo--footer .logo-img { height: 56px; max-width: 240px; }
+/* Footer yazı-logoya düşerse (görsel yoksa) açık renk göster */
 .logo--footer .logo-mark { height: 56px; color: var(--bronze-pale); }
 .logo--footer .logo-text { fill: var(--bronze-pale); }
 .logo--footer .logo-leaf-p { fill: var(--bronze-pale); }
