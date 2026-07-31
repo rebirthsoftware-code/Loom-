@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Feed 4:5 — Ana Teklif</title>
+<link rel="stylesheet" href="base.css">
+<style>
+  .canvas{ width:1080px; height:1350px; }
+
+  .frame{ position:absolute; left:44px; top:44px; right:44px; bottom:44px; z-index:11;
+          border:1px solid rgba(242,236,227,.055); }
+
+  .col{ position:absolute; left:72px; width:936px; }
+  .left{ position:absolute; left:72px; width:528px; }
+  .right{ position:absolute; left:648px; width:360px; }
+
+  .meta{ top:96px; display:flex; justify-content:space-between; align-items:baseline; font-size:17px; }
+  .r-top{ top:138px; }
+
+  .eyebrow{ top:190px; font-size:18px; letter-spacing:.3em; }
+  .headline{ top:234px; font-size:82px; line-height:.97; }
+  .headline span{ display:block; white-space:nowrap; }
+  .kicker{ top:500px; font-size:26px; line-height:1.34; color:rgba(242,236,227,.50); }
+
+  .feats{ top:620px; }
+  .feats div{ display:flex; align-items:baseline; gap:14px; height:40px;
+              font-family:'Plex',monospace; font-size:16px; letter-spacing:.2em;
+              text-transform:uppercase; color:rgba(242,236,227,.62); }
+  .feats i{ font-style:normal; color:var(--ember); font-size:12px; }
+
+  .price{ top:830px; }
+  .price *{ white-space:nowrap; }
+  .price .top{ display:flex; align-items:baseline; gap:16px; }
+  .price .lbl{ font-family:'Plex',monospace; font-size:13px; letter-spacing:.26em;
+               text-transform:uppercase; color:rgba(242,236,227,.28); }
+  .price .old{ position:relative; display:inline-block; font-family:'Shoulders',sans-serif;
+               font-weight:700; font-size:48px; line-height:1; color:rgba(242,236,227,.30); }
+  .price .old::after{ content:''; position:absolute; left:-4px; right:-4px; top:44%; height:2px;
+                      background:var(--ember); transform:rotate(-7deg); }
+  .price .new{ display:block; margin-top:12px; font-family:'Shoulders',sans-serif; font-weight:700;
+               font-size:128px; line-height:.82; color:var(--ember);
+               text-shadow:0 0 62px rgba(232,89,26,.40); }
+  .price .tag{ display:block; margin-top:12px; font-family:'Plex',monospace; font-size:14px;
+               letter-spacing:.26em; text-transform:uppercase; color:var(--ember); }
+
+  .cta{ position:absolute; top:1062px; width:528px; height:84px; display:flex; align-items:center;
+        justify-content:center; gap:16px;
+        background:linear-gradient(180deg,#F06A28 0%,#E8591A 46%,#D24C12 100%);
+        box-shadow:0 0 54px -12px rgba(232,89,26,.55), inset 0 1px 0 rgba(255,255,255,.28); }
+  .cta b{ font-family:'Shoulders',sans-serif; font-weight:700; font-size:46px; line-height:1;
+          text-transform:uppercase; color:#0B0A09; letter-spacing:.02em; padding-top:4px; }
+  .cta i{ font-family:'Shoulders',sans-serif; font-style:normal; font-weight:700; font-size:36px;
+          color:#0B0A09; padding-top:3px; }
+
+  .footer{ top:1224px; font-size:14px; letter-spacing:.32em; color:rgba(242,236,227,.20); }
+
+  /* --- sağ sütun --- */
+  .rlabel{ top:196px; text-align:center; font-size:14px; letter-spacing:.28em; }
+  .floor{ position:absolute; left:672px; top:945px; width:312px; height:66px; z-index:9;
+          background:radial-gradient(50% 50% at 50% 50%, rgba(232,89,26,.24), rgba(232,89,26,0) 70%);
+          filter:blur(6px); }
+  .phone-wrap{ position:absolute; left:672px; top:246px; width:312px; height:675px; z-index:10; }
+  .phone{ width:100%; height:100%; --r:37px; }
+  .phone-notch{ --nt:9px; --nw:78px; --nh:20px; }
+  .site{ transform:scale(.8); }
+  .rstamp{ top:962px; text-align:center; font-size:14px; letter-spacing:.26em; }
+  .rsub{ top:1000px; text-align:center; font-size:17px; color:rgba(242,236,227,.38); }
+  .rmeta{ top:1062px; height:84px; display:flex; border-top:1px solid rgba(242,236,227,.11);
+          border-bottom:1px solid rgba(242,236,227,.11); }
+  .rmeta div{ flex:1; display:flex; flex-direction:column; justify-content:center; text-align:center;
+              border-left:1px solid rgba(242,236,227,.11); }
+  .rmeta div:first-child{ border-left:none; }
+  .rmeta b{ font-family:'Shoulders',sans-serif; font-weight:700; font-size:38px; line-height:1;
+            color:var(--ember); }
+  .rmeta span{ margin-top:8px; font-family:'Plex',monospace; font-size:12px; letter-spacing:.24em;
+               text-transform:uppercase; color:rgba(242,236,227,.42); }
+</style>
+</head>
+<body>
+<div class="canvas">
+  <div class="bg-glow"></div>
+  <div class="bg-rake"></div>
+  <div class="bg-scan"></div>
+  <svg class="bg-grain" xmlns="http://www.w3.org/2000/svg">
+    <filter id="g"><feTurbulence type="fractalNoise" baseFrequency=".82" numOctaves="4" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/></filter>
+    <rect width="100%" height="100%" filter="url(#g)"/>
+  </svg>
+  <div class="bg-vignette"></div>
+
+  <div class="frame"></div>
+  <div class="bracket tl" style="left:44px;top:44px"></div>
+  <div class="bracket tr" style="right:44px;top:44px"></div>
+  <div class="bracket bl" style="left:44px;bottom:44px"></div>
+  <div class="bracket br" style="right:44px;bottom:44px"></div>
+
+  <div class="stage">
+
+    <div class="col meta mono">
+      <span class="ember">004 / KAMPANYA</span>
+      <span class="dim">REBIRTH SOFTWARE</span>
+    </div>
+    <div class="col rule ticked r-top"></div>
+
+    <div class="left eyebrow mono ember">Berber &amp; Erkek Kuaförü İçin</div>
+
+    <div class="left headline display">
+      <span>Berberine Özel</span>
+      <span>Web Sitesi &amp;</span>
+      <span class="ember">Online Randevu</span>
+    </div>
+
+    <div class="left kicker serif">Müşterin randevuyu DM’den değil,<br>kendi sitenden alsın.</div>
+
+    <div class="left feats">
+      <div><i>◆</i><span>Salonuna özel tasarım</span></div>
+      <div><i>◆</i><span>7/24 online randevu</span></div>
+      <div><i>◆</i><span>Yönetim paneli dahil</span></div>
+      <div><i>◆</i><span>Alan adı + hosting 1 yıl</span></div>
+    </div>
+
+    <div class="left price">
+      <div class="top">
+        <span class="lbl">Normal Fiyat</span>
+        <span class="old">10.000 ₺</span>
+      </div>
+      <span class="new">8.000 ₺</span>
+      <span class="tag">Kampanya · %20 indirim</span>
+    </div>
+
+    <div class="cta" style="left:72px">
+      <b>DM’den «SİTE» yaz</b><i>→</i>
+    </div>
+
+    <div class="col footer mono">REBIRTH SOFTWARE · WEB &amp; RANDEVU SİSTEMLERİ</div>
+
+    <!-- sağ sütun -->
+    <div class="right rlabel mono ember">Örnek Çalışma</div>
+    <div class="floor"></div>
+    <div class="phone-wrap">
+      <div class="phone">
+        <div class="phone-screen">
+          <div class="phone-notch"></div>
+          <div class="site">
+            <div class="site-hero"><img src="assets/endam-dukkan.jpg" alt=""></div>
+            <div class="site-ui">
+              <div class="site-status">
+                <span>9:41</span>
+                <span class="ss"><i class="sig"></i><i class="sig"></i><i class="sig"></i><i class="bat"></i></span>
+              </div>
+              <div class="site-nav">
+                <div class="site-logo"><img src="assets/endam-logo.png" alt=""><b>ENDAMSINCE</b></div>
+                <div class="site-burger"><i></i><i></i><i></i></div>
+              </div>
+              <div class="site-center">
+                <div class="site-badge">Erkek Bakımında Yeni Bir Çağ</div>
+                <div class="site-h1">Tarzınızı<br><em>Keskinleştirin</em></div>
+                <div class="site-sub">Sıradan bir tıraş değil,<br>kendinize en değerli zaman dilimi.</div>
+                <div class="site-cta">Randevu Al</div>
+                <span class="site-cta2">Hizmetleri Keşfet</span>
+              </div>
+              <div class="site-marquee">
+                <span>Klasik Ustura</span><em>•</em><span>Modern Kesim</span><em>•</em><span>Cilt Bakımı</span>
+              </div>
+              <div class="site-section"><span>01 / Şubelerimiz</span><span>Zonguldak</span></div>
+              <div class="site-stats">
+                <div><b>5K+</b><span>Müşteri</span></div>
+                <div><b>45+</b><span>Yıl</span></div>
+                <div><b>3</b><span>Şube</span></div>
+              </div>
+              <div class="site-bar"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="right rstamp mono dim">ENDAMSINCE1979.COM</div>
+    <div class="right rsub serif">Zonguldak · Endamsince 1979</div>
+
+    <div class="right rmeta">
+      <div><b>7 GÜN</b><span>Teslim</span></div>
+      <div><b>1 YIL</b><span>Destek</span></div>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>

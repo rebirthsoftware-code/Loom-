@@ -1,0 +1,235 @@
+/* ===========================================================
+   KESKİN ZEMİN — ortak görsel sistem
+   Rebirth Software · Instagram reklam seti
+   =========================================================== */
+
+@font-face { font-family: 'Shoulders'; src: url('fonts/BigShoulders-Bold.ttf') format('truetype'); font-weight: 700; }
+@font-face { font-family: 'Shoulders'; src: url('fonts/BigShoulders-Regular.ttf') format('truetype'); font-weight: 400; }
+@font-face { font-family: 'Gloock';    src: url('fonts/Gloock-Regular.ttf') format('truetype'); }
+@font-face { font-family: 'Plex';      src: url('fonts/IBMPlexMono-Regular.ttf') format('truetype'); font-weight: 400; }
+@font-face { font-family: 'Plex';      src: url('fonts/IBMPlexMono-Bold.ttf') format('truetype'); font-weight: 700; }
+@font-face { font-family: 'Work';      src: url('fonts/WorkSans-Regular.ttf') format('truetype'); font-weight: 400; }
+@font-face { font-family: 'Work';      src: url('fonts/WorkSans-Bold.ttf') format('truetype'); font-weight: 700; }
+
+:root{
+  --coal:#060606;
+  --smoke:#0B0A09;
+  --bone:#F2ECE3;
+  --ember:#E8591A;
+  --ember-deep:#B33F0E;
+  --hair:rgba(242,236,227,.14);
+  --hair-soft:rgba(242,236,227,.07);
+}
+
+*{ margin:0; padding:0; box-sizing:border-box; }
+
+html,body{ background:var(--coal); }
+
+body{
+  font-family:'Work',sans-serif;
+  color:var(--bone);
+  -webkit-font-smoothing:antialiased;
+  text-rendering:geometricPrecision;
+}
+
+.canvas{
+  position:relative;
+  overflow:hidden;
+  background:var(--coal);
+  isolation:isolate;
+}
+
+/* ---------- zemin katmanları ---------- */
+
+/* sıcak kor ışığı — sönmüş bir dükkânın içindeki tek lamba */
+.bg-glow{
+  position:absolute; inset:0; z-index:0;
+  background:
+    radial-gradient(120% 62% at 50% -8%,  rgba(232,89,26,.15) 0%, rgba(232,89,26,0) 62%),
+    radial-gradient(90%  50% at 8% 104%,  rgba(232,89,26,.07) 0%, rgba(232,89,26,0) 60%),
+    linear-gradient(180deg, #0C0A09 0%, #070606 46%, #050505 78%, #0A0908 100%);
+}
+
+/* 45° saç teli tramı — berber direğinin soyutlaması */
+.bg-rake{
+  position:absolute; inset:-20%; z-index:1;
+  background-image:repeating-linear-gradient(45deg,
+    rgba(242,236,227,.030) 0px, rgba(242,236,227,.030) 1px,
+    rgba(242,236,227,0)    1px, rgba(242,236,227,0)    13px);
+}
+
+/* tarama çizgileri — sitenin kendi yükleme ekranına selam */
+.bg-scan{
+  position:absolute; inset:0; z-index:2;
+  background-image:repeating-linear-gradient(180deg,
+    rgba(0,0,0,.30) 0px, rgba(0,0,0,.30) 1px,
+    rgba(0,0,0,0)   1px, rgba(0,0,0,0)   4px);
+  opacity:.5;
+}
+
+/* film greni */
+.bg-grain{
+  position:absolute; inset:0; z-index:3;
+  opacity:.16; mix-blend-mode:overlay; pointer-events:none;
+}
+
+/* vinyet */
+.bg-vignette{
+  position:absolute; inset:0; z-index:4;
+  background:radial-gradient(115% 78% at 50% 46%, rgba(0,0,0,0) 40%, rgba(0,0,0,.55) 100%);
+}
+
+.stage{ position:relative; z-index:10; height:100%; }
+
+/* ---------- köşe ayraçları ---------- */
+.bracket{ position:absolute; width:38px; height:38px; z-index:11; }
+.bracket::before,.bracket::after{ content:''; position:absolute; background:var(--ember); }
+.bracket::before{ width:100%; height:1.5px; }
+.bracket::after { width:1.5px; height:100%; }
+.bracket.tl{ top:0; left:0; }      .bracket.tl::before{ top:0; left:0; }    .bracket.tl::after{ top:0; left:0; }
+.bracket.tr{ top:0; right:0; }     .bracket.tr::before{ top:0; right:0; }   .bracket.tr::after{ top:0; right:0; }
+.bracket.bl{ bottom:0; left:0; }   .bracket.bl::before{ bottom:0; left:0; } .bracket.bl::after{ bottom:0; left:0; }
+.bracket.br{ bottom:0; right:0; }  .bracket.br::before{ bottom:0; right:0; }.bracket.br::after{ bottom:0; right:0; }
+
+/* ---------- tipografi ---------- */
+.mono{
+  font-family:'Plex',monospace; font-weight:400;
+  letter-spacing:.30em; text-transform:uppercase;
+}
+.display{
+  font-family:'Shoulders',sans-serif; font-weight:700;
+  text-transform:uppercase; line-height:.82;
+  letter-spacing:.005em;
+}
+.serif{ font-family:'Gloock',serif; line-height:1.14; }
+.ember{ color:var(--ember); }
+.dim{ color:rgba(242,236,227,.42); }
+.dimmer{ color:rgba(242,236,227,.26); }
+
+/* ince cetvel + tik işaretleri */
+.rule{ position:relative; height:1px; background:var(--hair); }
+.rule.ticked::before,.rule.ticked::after{
+  content:''; position:absolute; top:-3px; width:1px; height:7px; background:var(--ember);
+}
+.rule.ticked::before{ left:0; }
+.rule.ticked::after { right:0; }
+
+/* ---------- telefon maketi ---------- */
+.phone{
+  position:relative;
+  border-radius:var(--r,34px);
+  background:linear-gradient(160deg,#3a3733 0%,#111010 26%,#0a0908 62%,#2b2724 100%);
+  padding:3px;
+  box-shadow:
+    0 0 0 1px rgba(242,236,227,.10),
+    0 40px 90px -20px rgba(0,0,0,.9),
+    0 0 130px -30px rgba(232,89,26,.34);
+}
+.phone-screen{
+  position:relative; width:100%; height:100%;
+  border-radius:calc(var(--r,34px) - 3px);
+  overflow:hidden; background:#060606;
+}
+.phone-notch{
+  position:absolute; z-index:40; top:calc(var(--nt,10px)); left:50%; transform:translateX(-50%);
+  width:var(--nw,86px); height:var(--nh,22px); border-radius:99px; background:#050505;
+}
+
+/* ---------- site ekranı (endamsince1979.com yeniden kurgusu) ---------- */
+.site{ position:absolute; inset:0; transform-origin:top left; width:390px; height:844px; }
+.site-hero{ position:absolute; inset:0; overflow:hidden; }
+.site-hero img{
+  position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+  object-position:50% 46%;
+  filter:saturate(.42) brightness(.34) contrast(1.16);
+}
+.site-hero::after{
+  content:''; position:absolute; inset:0;
+  background:
+    linear-gradient(180deg, rgba(6,6,6,.90) 0%, rgba(6,6,6,.46) 30%, rgba(6,6,6,.72) 62%, #060606 100%),
+    radial-gradient(74% 36% at 50% 30%, rgba(232,89,26,.20), rgba(232,89,26,0) 70%);
+}
+.site-ui{ position:absolute; inset:0; z-index:5; color:#F2ECE3; }
+.site-status{
+  position:absolute; top:15px; left:0; right:0; padding:0 24px;
+  display:flex; justify-content:space-between; align-items:center;
+  font-family:'Work',sans-serif; font-weight:700; font-size:13px; letter-spacing:.01em; opacity:.95;
+}
+.site-status .ss{ display:flex; align-items:flex-end; gap:2px; height:11px; }
+.site-status .ss i{ display:block; background:#F2ECE3; border-radius:1px; }
+.site-status .ss .sig{ width:3px; }
+.site-status .ss .sig:nth-of-type(1){ height:5px; }
+.site-status .ss .sig:nth-of-type(2){ height:8px; }
+.site-status .ss .sig:nth-of-type(3){ height:11px; }
+.site-status .ss .bat{ width:19px; height:10px; margin-left:5px; border-radius:2px; }
+.site-nav{
+  position:absolute; top:54px; left:0; right:0; padding:0 22px;
+  display:flex; justify-content:space-between; align-items:center;
+}
+.site-logo{ display:flex; align-items:center; gap:8px; }
+.site-logo img{ width:21px; height:21px; filter:brightness(0) invert(1); opacity:.95; }
+.site-logo b{
+  font-family:'Plex',monospace; font-weight:400; font-size:9px; letter-spacing:.24em;
+  color:rgba(242,236,227,.82);
+}
+.site-burger{ display:flex; flex-direction:column; gap:4px; }
+.site-burger i{ display:block; width:19px; height:1.5px; background:#F2ECE3; }
+.site-center{
+  position:absolute; left:0; right:0; top:214px; padding:0 26px; text-align:center;
+}
+.site-badge{
+  font-family:'Plex',monospace; font-size:8px; letter-spacing:.34em;
+  color:var(--ember); text-transform:uppercase;
+}
+.site-h1{ font-family:'Gloock',serif; font-size:44px; line-height:1.0; margin-top:12px; }
+.site-h1 em{ font-style:normal; color:var(--ember); }
+.site-sub{
+  font-family:'Work',sans-serif; font-size:11px; line-height:1.65;
+  color:rgba(242,236,227,.62); margin-top:14px;
+}
+.site-cta{
+  margin-top:22px; display:inline-flex; align-items:center; gap:9px;
+  background:var(--ember); color:#0B0A09;
+  font-family:'Work',sans-serif; font-weight:700; font-size:11px; letter-spacing:.14em;
+  padding:11px 22px; border-radius:2px; text-transform:uppercase;
+}
+.site-cta2{
+  margin-top:12px; display:block;
+  font-family:'Work',sans-serif; font-size:10px; letter-spacing:.18em;
+  color:rgba(242,236,227,.55); text-transform:uppercase;
+}
+/* siteden alınan kayan şerit — ölü alanı dolduran gerçek bir öğe */
+.site-marquee{
+  position:absolute; left:0; right:0; top:596px;
+  border-top:1px solid rgba(242,236,227,.10);
+  border-bottom:1px solid rgba(242,236,227,.10);
+  padding:9px 0; overflow:hidden;
+  background:rgba(6,6,6,.45);
+  display:flex; justify-content:center; gap:12px; white-space:nowrap;
+  font-family:'Plex',monospace; font-size:8px; letter-spacing:.26em;
+  color:rgba(242,236,227,.55); text-transform:uppercase;
+}
+.site-marquee em{ font-style:normal; color:var(--ember); }
+.site-section{
+  position:absolute; left:26px; right:26px; top:648px;
+  display:flex; justify-content:space-between; align-items:baseline;
+  font-family:'Plex',monospace; font-size:8px; letter-spacing:.26em;
+  color:rgba(242,236,227,.40); text-transform:uppercase;
+}
+.site-stats{
+  position:absolute; left:26px; right:26px; bottom:64px;
+  display:flex; justify-content:space-between; text-align:center;
+  border-top:1px solid rgba(242,236,227,.12); padding-top:16px;
+}
+.site-stats div b{
+  display:block; font-family:'Shoulders',sans-serif; font-weight:700;
+  font-size:28px; line-height:1; color:var(--ember);
+}
+.site-stats div span{
+  font-family:'Plex',monospace; font-size:7px; letter-spacing:.22em;
+  color:rgba(242,236,227,.5); text-transform:uppercase;
+}
+.site-bar{
+  position:absolute; left:50%; transform:translateX(-50%); bottom:9px;
+  width:126px; height:4px; border-radius:99px; background:rgba(242,236,227,.5);
+}

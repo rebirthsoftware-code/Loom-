@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Reels Kapak — Kanca</title>
+<link rel="stylesheet" href="base.css">
+<style>
+  .canvas{ width:1080px; height:1920px; }
+
+  /* --- fotoğraf zemin --- */
+  .photo{ position:absolute; inset:0; z-index:0; overflow:hidden; }
+  .photo img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+              object-position:50% 58%;
+              filter:saturate(.26) brightness(.24) contrast(1.26); }
+  .photo::after{
+    content:''; position:absolute; inset:0;
+    background:
+      linear-gradient(180deg, rgba(6,6,6,.94) 0%, rgba(6,6,6,.60) 22%, rgba(6,6,6,.66) 46%,
+                              rgba(6,6,6,.90) 72%, #060606 100%),
+      radial-gradient(66% 30% at 50% 24%, rgba(232,89,26,.24), rgba(232,89,26,0) 74%);
+  }
+
+  .frame{ position:absolute; left:56px; top:56px; right:56px; bottom:56px; z-index:11;
+          border:1px solid rgba(242,236,227,.06); }
+
+  .col{ position:absolute; left:88px; width:904px; }
+
+  .meta{ top:250px; display:flex; justify-content:space-between; align-items:baseline; font-size:19px; }
+  .r-top{ top:296px; }
+
+  .eyebrow{ top:340px; text-align:center; font-size:21px; letter-spacing:.32em; }
+
+  .headline{ top:398px; text-align:center; font-size:172px; line-height:.96; }
+  .headline span{ display:block; white-space:nowrap; }
+
+  .sub{ top:936px; text-align:center; font-size:36px; line-height:1.32;
+        color:rgba(242,236,227,.60); }
+
+  .chips{ top:1048px; display:flex; justify-content:center; align-items:center; gap:22px;
+          font-size:16px; letter-spacing:.24em; color:rgba(242,236,227,.50); }
+  .chips i{ font-style:normal; color:var(--ember); font-size:11px; }
+
+  .r-mid{ top:1110px; }
+
+  .price{ top:1146px; height:222px; display:flex; align-items:flex-end; justify-content:center;
+          gap:46px; }
+  .price *{ white-space:nowrap; }
+  .price .lbl{ display:block; font-size:15px; letter-spacing:.26em; }
+  .price .old{ text-align:right; padding-bottom:28px; }
+  .price .old .lbl{ color:rgba(242,236,227,.30); margin-bottom:13px; }
+  .price .old .val{ position:relative; display:inline-block;
+                    font-family:'Shoulders',sans-serif; font-weight:700; font-size:84px;
+                    line-height:.78; color:rgba(242,236,227,.30); }
+  .price .old .val::after{ content:''; position:absolute; left:-6px; right:-6px; top:42%;
+                           height:3px; background:var(--ember); transform:rotate(-7deg);
+                           box-shadow:0 0 14px rgba(232,89,26,.32); }
+  .price .new{ text-align:left; }
+  .price .new .lbl{ color:var(--ember); margin-bottom:11px; }
+  .price .new .val{ display:block; font-family:'Shoulders',sans-serif; font-weight:700;
+                    font-size:182px; line-height:.78; color:var(--ember);
+                    text-shadow:0 0 96px rgba(232,89,26,.44); }
+
+  .cta{ top:1406px; text-align:center; }
+  .cta b{ font-family:'Shoulders',sans-serif; font-weight:700; font-size:68px; line-height:1;
+          text-transform:uppercase; color:var(--bone); letter-spacing:.02em; }
+  .cta b em{ font-style:normal; color:var(--ember); }
+  .cta .u{ margin:20px auto 0; width:520px; height:2px;
+           background:linear-gradient(90deg, rgba(232,89,26,0), var(--ember), rgba(232,89,26,0)); }
+
+  .credit{ top:1538px; text-align:center; font-size:16px; letter-spacing:.28em;
+           color:rgba(242,236,227,.32); }
+  .footer{ top:1786px; text-align:center; font-size:15px; letter-spacing:.34em;
+           color:rgba(242,236,227,.20); }
+</style>
+</head>
+<body>
+<div class="canvas">
+  <div class="photo"><img src="assets/endam-dukkan.jpg" alt=""></div>
+  <div class="bg-rake"></div>
+  <div class="bg-scan"></div>
+  <svg class="bg-grain" xmlns="http://www.w3.org/2000/svg">
+    <filter id="g"><feTurbulence type="fractalNoise" baseFrequency=".82" numOctaves="4" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/></filter>
+    <rect width="100%" height="100%" filter="url(#g)"/>
+  </svg>
+  <div class="bg-vignette"></div>
+
+  <div class="frame"></div>
+  <div class="bracket tl" style="left:56px;top:56px"></div>
+  <div class="bracket tr" style="right:56px;top:56px"></div>
+  <div class="bracket bl" style="left:56px;bottom:56px"></div>
+  <div class="bracket br" style="right:56px;bottom:56px"></div>
+
+  <div class="stage">
+
+    <div class="col meta mono">
+      <span class="ember">002 / REELS</span>
+      <span class="dim">REBIRTH SOFTWARE</span>
+    </div>
+    <div class="col rule ticked r-top"></div>
+
+    <div class="col eyebrow mono ember">Berber &amp; Erkek Kuaförü İşletmeleri İçin</div>
+
+    <div class="col headline display">
+      <span>Randevu</span>
+      <span>Defterini</span>
+      <span class="ember">Kapat.</span>
+    </div>
+
+    <div class="col sub serif">
+      Müşterin randevusunu kendi sitenden alsın.<br>7/24 açık, çakışma yok.
+    </div>
+
+    <div class="col chips mono">
+      <span>Özel Tasarım</span><i>◆</i>
+      <span>Online Randevu</span><i>◆</i>
+      <span>Mobil Uyumlu</span><i>◆</i>
+      <span>SEO</span>
+    </div>
+
+    <div class="col rule ticked r-mid"></div>
+
+    <div class="col price">
+      <div class="old">
+        <span class="lbl mono">Normal Fiyat</span>
+        <span class="val">10.000 ₺</span>
+      </div>
+      <div class="new">
+        <span class="lbl mono">Kampanya · %20 İndirim</span>
+        <span class="val">8.000 ₺</span>
+      </div>
+    </div>
+
+    <div class="col cta">
+      <b>DM’den <em>«SİTE»</em> yaz</b>
+      <div class="u"></div>
+    </div>
+
+    <div class="col credit mono">ÖRNEK ÇALIŞMA · ENDAMSINCE1979.COM</div>
+    <div class="col footer mono">REBIRTH SOFTWARE · WEB &amp; RANDEVU SİSTEMLERİ</div>
+
+  </div>
+</div>
+</body>
+</html>
