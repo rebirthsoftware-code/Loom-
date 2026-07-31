@@ -11,28 +11,35 @@ Tasarım felsefesi: [`TASARIM-FELSEFESI.md`](./TASARIM-FELSEFESI.md)
 
 ## Video
 
-| Dosya | Ölçü | Süre |
-|---|---|---|
-| `out/reels-film.mp4` | 1080×1920, H.264, 30 fps | 22 sn |
+| Dosya | Ölçü | Süre | Ses |
+|---|---|---|---|
+| **`out/reels-film-sesli.mp4`** | 1080×1920, H.264, 30 fps | 29.6 sn | **seslendirme + efekt** ← yüklenecek dosya |
+| `out/reels-film.mp4` | 1080×1920, H.264, 30 fps | 29.6 sn | sessiz (ara dosya) |
 
-Reels'e doğrudan yüklenecek film. Kurgu altı bölümden oluşuyor:
+Kurgu altı bölümden oluşuyor, her bölüm bir replikle eşleşiyor:
 
-| Sn | Bölüm | Ne oluyor |
-|---|---|---|
-| 0.0 – 3.4 | **Kanca** | `23:40` saati. "Müşterin randevu istedi. Sen uyuyordun." |
-| 3.4 – 7.0 | **Problem** | Gelen DM balonu → "Görüldü 09:15" → "Müşteri gitmişti." |
-| 7.0 – 9.3 | **Dönüş** | "Peki ya senin siten olsaydı?" — telefon aşağıdan yükselir |
-| 9.3 – 15.1 | **Ürün** | Site kayar, **randevu ekranı** açılır, saat seçilir, onay butonu atar. Yanında sırayla 4 madde |
-| 15.1 – 18.7 | **Teklif** | 10.000 ₺ üstü çizilir, 8.000 ₺ ekrana çakılır |
-| 18.7 – 22.0 | **Çağrı** | "DM'den «SİTE» yaz" + örnek çalışma adresi |
+| Sn | Bölüm | Görüntü | Seslendirme |
+|---|---|---|---|
+| 0.0 – 5.1 | **Kanca** | `23:40` kutusu, "MÜŞTERİN RANDEVU İSTEDİ", "SEN UYUYORDUN." | *"Gece yarısı. Müşterin randevu istedi, sen uyuyordun."* |
+| 5.1 – 9.4 | **Problem** | DM balonu → "Görüldü 09:15" → "MÜŞTERİ GİTMİŞTİ." | *"Sabah gördüğünde o müşteri çoktan gitmişti."* |
+| 9.4 – 11.9 | **Dönüş** | "SENİN SİTEN OLSAYDI?" — telefon yükselir | *"Peki ya senin siten olsaydı?"* |
+| 11.9 – 21.3 | **Ürün** | Site kayar, randevu ekranı, saat seçilir, "✓ RANDEVU ALINDI" | *"Müşterin siteye girer, boş saati kendisi seçer. Çakışma yok."* + *"Salonuna özel site ve online randevu sistemi."* |
+| 21.3 – 26.2 | **Teklif** | 10.000 ₺ çizilir, 8.000 ₺ çakılır | *"Normalde on bin lira. Bu ay sekiz bin."* |
+| 26.2 – 29.6 | **Çağrı** | "DM'DEN «SİTE» YAZ" + örnek çalışma adresi | *"Şimdi bize site yaz."* |
 
-En ikna edici an 11–14. saniyeler: telefonun içinde gerçekten hizmet seçilip, tarih ve saat
-tıklanıp randevu oluşturuluyor. Karşındaki berber "bu sistem gerçekten çalışıyor" diye
+En ikna edici an 13–17. saniyeler: telefonun içinde gerçekten hizmet seçilip, tarih ve saat
+tıklanıp randevu oluşturuluyor, buton "✓ RANDEVU ALINDI" oluyor. Seslendirme tam o anda
+*"boş saati kendisi seçer"* diyor. Karşındaki berber "bu sistem gerçekten çalışıyor" diye
 düşünsün diye o bölüm yavaş ve okunaklı tutuldu.
 
-**Ses:** dosyada sessiz bir ses kanalı var. Yükledikten sonra Instagram içinden trend bir
-müzik ekle — hem eksik ses hissi kalmaz hem de erişime yardımcı olur. Sakin, ritmi orta
-tempolu bir parça seç; kesmeler 3.4 / 7.0 / 15.1 / 18.7. saniyelerde.
+**Ses:** `tr-TR-AhmetNeural` nöral seslendirme + sentezlenmiş efektler (kesme savurmaları,
+alt bas vuruşlar, dokunuş tıkı, onay çıngırağı). Miks -14 LUFS'a eşitlendi — Instagram'ın
+normalleştirme hedefi, yani platformda ne kısılır ne bozulur. Detaylar ve replik metinleri:
+[`ses/senaryo.md`](./ses/senaryo.md).
+
+**Müzik:** bilerek melodi eklemedim, seslendirmenin önüne geçmesin diye. İstersen
+Instagram'dan trend bir parça ekleyip parça sesini %15–20'ye düşür (orijinal ses %100
+kalsın). Kesmeler 5.0 / 9.4 / 21.3 / 26.2. saniyelerde.
 
 **Kapak:** `out/reels-kapak.png` dosyasını kapak olarak seç (Instagram yükleme ekranında
 "Kapağı düzenle" → "Galeriden ekle"). Profil ızgarasında o görünür.
@@ -121,10 +128,14 @@ src/
   story-1.html    story — ana teklif
   story-2.html    story — paket içeriği
   reels-kapak.html reels kapağı
-  reels-film.html  22 sn'lik reels filmi (zaman çizelgesi dosyanın sonundaki script'te)
+  reels-film.html  29.6 sn'lik reels filmi (zaman çizelgesi dosyanın sonundaki script'te)
   feed-4x5.html   feed gönderisi
   fonts/          Big Shoulders · Gloock · IBM Plex Mono · Work Sans (hepsi OFL)
   assets/         endamsince1979.com'dan alınan logo ve dükkân fotoğrafı
+ses/
+  senaryo.md      replikler, kelime–görüntü eşlemeleri, efekt listesi
+  tts-uret.py     seslendirmeyi yeniden basar (edge-tts)
+  vo/v1..v7.wav   hazır seslendirme dosyaları
 ```
 
 **Sık değişecek yerler:**
@@ -153,7 +164,10 @@ node render.mjs                    # 4 görsel (hepsi)
 node render.mjs story-1            # tek görsel
 
 node render-video.mjs --preview    # filmden kilit kareler → out/preview/
-node render-video.mjs              # 22 sn'lik MP4 (~4 dk sürer)
+node render-video.mjs              # sessiz MP4 (~5 dk sürer)
+
+python3 ses/tts-uret.py            # seslendirmeyi yeniden bas (edge-tts, internet ister)
+python3 build-audio.py             # sesi miksle ve videoya göm → reels-film-sesli.mp4
 ```
 
 Görseller: Chromium ile 2x render alınıp Pillow ile indirgenir.
@@ -170,7 +184,13 @@ sabit yazılmış — başka makinede `import { chromium } from 'playwright'` ve
 **Kurguyu değiştirmek:** `reels-film.html` sonundaki script'te `S` nesnesi sahne
 sınırlarını, `LABELS` dizisi 4 maddeyi, `CUTS` dizisi kesme anlarını tutar. Süreyi
 `DUR` belirler. Bir sahneyi uzatırsan sonraki sahnelerin başlangıcını ve `DUR`'u da
-kaydır.
+kaydır — ayrıca `build-audio.py` içindeki `KONUSMA` / `EFEKT` saniyelerini de.
+Görüntü ve ses iki ayrı yerde tanımlı, tek doğruluk kaynağı yok; birini
+değiştirdiğinde diğerini kontrol et.
+
+**Kendi sesinle okumak:** replikleri `ses/vo/v1.wav` … `v7.wav` adlarıyla 48 kHz mono
+kaydet, `build-audio.py`'yi çalıştır. Süreler değişirse `KONUSMA` tablosundaki
+başlangıç saniyelerini kaydırman yeterli. Metinler `ses/senaryo.md` içinde.
 
 ## Lisanslar
 

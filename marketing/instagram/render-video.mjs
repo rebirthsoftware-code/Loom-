@@ -33,7 +33,7 @@ const clip = { x: 0, y: 0, width: W, height: H };
 if (PREVIEW) {
   const dir = path.join(OUT, 'preview');
   fs.mkdirSync(dir, { recursive: true });
-  const marks = [0.9, 2.4, 4.6, 6.2, 8.2, 10.4, 12.0, 13.0, 14.0, 16.4, 17.6, 20.4];
+  const marks = [3.4, 7.6, 10.6, 12.8, 14.2, 15.1, 16.6, 18.6, 22.4, 24.4, 25.6, 28.4];
   for (const t of marks) {
     await page.evaluate(([t, f]) => window.__seek(t, f), [t, Math.round(t * FPS)]);
     await page.screenshot({ path: path.join(dir, `t${t.toFixed(1).replace('.', '_')}.png`), clip });
