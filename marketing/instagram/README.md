@@ -13,23 +13,23 @@ Tasarım felsefesi: [`TASARIM-FELSEFESI.md`](./TASARIM-FELSEFESI.md)
 
 | Dosya | Ölçü | Süre | Ses |
 |---|---|---|---|
-| **`out/reels-film-sesli.mp4`** | 1080×1920, H.264, 30 fps | 29.6 sn | **seslendirme + efekt** ← yüklenecek dosya |
-| `out/reels-film.mp4` | 1080×1920, H.264, 30 fps | 29.6 sn | sessiz (ara dosya) |
+| **`out/reels-film-sesli.mp4`** | 1080×1920, H.264, 30 fps | 30.4 sn | **seslendirme + efekt** ← yüklenecek dosya |
+| `out/reels-film.mp4` | 1080×1920, H.264, 30 fps | 30.4 sn | sessiz (ara dosya) |
 
 Kurgu altı bölümden oluşuyor, her bölüm bir replikle eşleşiyor:
 
 | Sn | Bölüm | Görüntü | Seslendirme |
 |---|---|---|---|
-| 0.0 – 5.1 | **Kanca** | `23:40` kutusu, "MÜŞTERİN RANDEVU İSTEDİ", "SEN UYUYORDUN." | *"Gece yarısı. Müşterin randevu istedi, sen uyuyordun."* |
-| 5.1 – 9.4 | **Problem** | DM balonu → "Görüldü 09:15" → "MÜŞTERİ GİTMİŞTİ." | *"Sabah gördüğünde o müşteri çoktan gitmişti."* |
-| 9.4 – 11.9 | **Dönüş** | "SENİN SİTEN OLSAYDI?" — telefon yükselir | *"Peki ya senin siten olsaydı?"* |
-| 11.9 – 21.3 | **Ürün** | Site kayar, randevu ekranı, saat seçilir, "✓ RANDEVU ALINDI" | *"Müşterin siteye girer, boş saati kendisi seçer. Çakışma yok."* + *"Salonuna özel site ve online randevu sistemi."* |
-| 21.3 – 26.2 | **Teklif** | 10.000 ₺ çizilir, 8.000 ₺ çakılır | *"Normalde on bin lira. Bu ay sekiz bin."* |
-| 26.2 – 29.6 | **Çağrı** | "DM'DEN «SİTE» YAZ" + örnek çalışma adresi | *"Şimdi bize site yaz."* |
+| 0.0 – 5.6 | **Kanca** | `23:40` kutusu, "MÜŞTERİN RANDEVU İSTEDİ", "SEN UYUYORDUN." | *"Gece yarısı. Müşterin randevu istedi, sen uyuyordun."* |
+| 5.6 – 10.0 | **Problem** | DM balonu → "Görüldü 09:15" → "MÜŞTERİ GİTMİŞTİ." | *"Sabah gördüğünde o müşteri çoktan gitmişti."* |
+| 10.0 – 12.5 | **Dönüş** | "SENİN SİTEN OLSAYDI?" — telefon yükselir | *"Peki ya senin siten olsaydı?"* |
+| 12.5 – 21.9 | **Ürün** | Site kayar, randevu ekranı, saat seçilir, "✓ RANDEVU ALINDI" | *"Müşterin siteye girer, boş saati kendisi seçer. Çakışma yok."* + *"Salonuna özel site ve online randevu sistemi."* |
+| 21.9 – 27.0 | **Teklif** | 10.000 ₺ çizilir, 8.000 ₺ çakılır | *"Normalde on bin lira. Bu ay sekiz bin."* |
+| 27.0 – 30.4 | **Çağrı** | "DM'DEN «SİTE» YAZ" + örnek çalışma adresi | *"Şimdi bize site yaz."* |
 
-En ikna edici an 13–17. saniyeler: telefonun içinde gerçekten hizmet seçilip, tarih ve saat
+En ikna edici an 14–18. saniyeler: telefonun içinde gerçekten hizmet seçilip, tarih ve saat
 tıklanıp randevu oluşturuluyor, buton "✓ RANDEVU ALINDI" oluyor. Seslendirme tam o anda
-*"boş saati kendisi seçer"* diyor. Karşındaki berber "bu sistem gerçekten çalışıyor" diye
+*"boş saati kendisi seçer"* diyor — kelime ile tıklama aynı kareye denk geliyor. Karşındaki berber "bu sistem gerçekten çalışıyor" diye
 düşünsün diye o bölüm yavaş ve okunaklı tutuldu.
 
 **Ses:** `tr-TR-AhmetNeural` nöral seslendirme + sentezlenmiş efektler (kesme savurmaları,
@@ -39,7 +39,7 @@ normalleştirme hedefi, yani platformda ne kısılır ne bozulur. Detaylar ve re
 
 **Müzik:** bilerek melodi eklemedim, seslendirmenin önüne geçmesin diye. İstersen
 Instagram'dan trend bir parça ekleyip parça sesini %15–20'ye düşür (orijinal ses %100
-kalsın). Kesmeler 5.0 / 9.4 / 21.3 / 26.2. saniyelerde.
+kalsın). Kesmeler 5.55 / 9.95 / 21.90 / 26.95. saniyelerde.
 
 **Kapak:** `out/reels-kapak.png` dosyasını kapak olarak seç (Instagram yükleme ekranında
 "Kapağı düzenle" → "Galeriden ekle"). Profil ızgarasında o görünür.
@@ -128,7 +128,7 @@ src/
   story-1.html    story — ana teklif
   story-2.html    story — paket içeriği
   reels-kapak.html reels kapağı
-  reels-film.html  29.6 sn'lik reels filmi (zaman çizelgesi dosyanın sonundaki script'te)
+  reels-film.html  30.4 sn'lik reels filmi (zaman çizelgesi dosyanın sonundaki script'te)
   feed-4x5.html   feed gönderisi
   fonts/          Big Shoulders · Gloock · IBM Plex Mono · Work Sans (hepsi OFL)
   assets/         endamsince1979.com'dan alınan logo ve dükkân fotoğrafı

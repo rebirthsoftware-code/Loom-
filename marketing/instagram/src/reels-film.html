@@ -373,7 +373,7 @@
 /* =======================================================================
    ZAMAN ÇİZELGESİ — seslendirmeye göre kurgulandı (bkz. ses/senaryo.md)
    ======================================================================= */
-const DUR = 29.6;
+const DUR = 30.4;
 const $  = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
 
@@ -399,17 +399,17 @@ function rise(el, t, t0, d, outAt){
 function scene(el, t, a, b){ el.style.opacity = (t >= a && t < b) ? 1 : 0; }
 
 /* sahne sınırları — her biri bir replikle eşleşir */
-const S = { s1:[0,5.10], s2:[5.10,9.40], s3:[9.40,11.90], s4:[11.90,21.30],
-            s5:[21.30,26.20], s6:[26.20,DUR] };
+const S = { s1:[0,5.55], s2:[5.55,9.95], s3:[9.95,12.45], s4:[12.45,21.90],
+            s5:[21.90,26.95], s6:[26.95,DUR] };
 
 const LABELS = [
-  [12.25, '01', 'Özel Tasarım',   'Hazır şablon değil, salonuna özel' ],
-  [14.05, '02', 'Online Randevu', 'Müşterin gece bile randevu alsın'  ],
-  [15.85, '03', 'Anında Onay',    'Dolu saat ikinci kez dolmaz'       ],
-  [17.60, '04', 'Yönetim Paneli', 'Tüm randevular tek ekranda'        ],
+  [12.95, '01', 'Özel Tasarım',   'Hazır şablon değil, salonuna özel' ],
+  [14.60, '02', 'Online Randevu', 'Müşterin gece bile randevu alsın'  ],
+  [16.30, '03', 'Anında Onay',    'Dolu saat ikinci kez dolmaz'       ],
+  [18.30, '04', 'Yönetim Paneli', 'Tüm randevular tek ekranda'        ],
 ];
 
-const CUTS = [5.10, 9.40, 21.30, 26.20];
+const CUTS = [5.55, 9.95, 21.90, 26.95];
 
 const E = {
   s1:$('#s1'), s2:$('#s2'), s3:$('#s3'), s5:$('#s5'), s6:$('#s6'),
@@ -439,34 +439,34 @@ window.__seek = function(t, frame){
   scene(E.s1, t, S.s1[0], S.s1[1]);
   if (E.s1.style.opacity === '1'){
     const r = R.s1;
-    rise(r[0], t, 0.40, .55);   // 23:40
-    rise(r[1], t, 1.40, .55);   // MÜŞTERİN
-    rise(r[2], t, 1.78, .55);   // RANDEVU İSTEDİ.
-    rise(r[3], t, 2.95, .55);   // SEN UYUYORDUN.
+    rise(r[0], t, 0.40, .55);   // 23:40  ← "Gece yarısı" 0.45
+    rise(r[1], t, 1.95, .55);   // MÜŞTERİN  ← "Müşterin randevu istedi" 2.40
+    rise(r[2], t, 2.35, .55);   // RANDEVU İSTEDİ.
+    rise(r[3], t, 3.55, .55);   // SEN UYUYORDUN.  ← "sen uyuyordun" 3.80
   }
 
   /* ================= SAHNE 2 — "Sabah gördüğünde o müşteri çoktan gitmişti." */
   scene(E.s2, t, S.s2[0], S.s2[1]);
   if (E.s2.style.opacity === '1'){
     const r = R.s2;
-    rise(r[0], t, 5.18, .50);   // DM balonu
-    rise(r[1], t, 6.00, .45);   // Görüldü 09:15
-    rise(r[2], t, 6.60, .50);   // SABAH GÖRDÜN.
-    rise(r[3], t, 7.05, .50);   // MÜŞTERİ GİTMİŞTİ.
+    rise(r[0], t, 5.63, .50);   // DM balonu
+    rise(r[1], t, 6.45, .45);   // Görüldü 09:15
+    rise(r[2], t, 7.05, .50);   // SABAH GÖRDÜN.  ← "Sabah gördüğünde" 6.95
+    rise(r[3], t, 7.90, .50);   // MÜŞTERİ GİTMİŞTİ.  ← "çoktan gitmişti" 8.45
   }
 
   /* ================= SAHNE 3 — "Peki ya senin siten olsaydı?" */
   scene(E.s3, t, S.s3[0], S.s3[1]);
   if (E.s3.style.opacity === '1'){
     const r = R.s3;
-    rise(r[0], t, 9.48, .40, 11.62);
-    rise(r[1], t, 9.68, .55, 11.62);
-    rise(r[2], t, 9.95, .55, 11.62);
+    rise(r[0], t, 10.03, .40, 12.17);
+    rise(r[1], t, 10.23, .55, 12.17);
+    rise(r[2], t, 10.50, .55, 12.17);
   }
 
   /* ================= TELEFON — "Müşterin siteye girer, boş saati kendisi seçer..." */
   {
-    const IN = 11.15, OUT = 20.72;
+    const IN = 11.70, OUT = 21.30;
     let o = 0, y = 0, s = 1;
     if (t >= IN && t < OUT + .58){
       const a = out(p(t, IN, .80));
@@ -481,26 +481,26 @@ window.__seek = function(t, frame){
     E.floor.style.transform = `translateY(${y.toFixed(1)}px)`;
 
     /* ana sayfa → randevu ekranı ("boş saati" derken kayar) */
-    const sc = io(p(t, 13.60, 1.10)) * 844;
+    const sc = io(p(t, 14.15, 1.10)) * 844;   // "boş saati" 14.20
     E.scroller.style.transform = `scale(.820513) translateY(${-sc.toFixed(1)}px)`;
 
     /* saati seç ("...kendisi seçer") */
-    const picked = t >= 14.95;
+    const picked = t >= 15.42;                // "...kendisi seçer" 15.55
     E.pick.classList.toggle('on', picked);
     E.sum.textContent = picked ? '05 Ağustos · 14:30' : 'Saat seç';
 
-    const tp = p(t, 14.72, .58);
+    const tp = p(t, 15.18, .58);
     if (tp > 0 && tp < 1){
       E.tap.style.opacity = ((1 - tp) * .9).toFixed(3);
       E.tap.style.transform = `scale(${(0.35 + tp * 1.35).toFixed(3)})`;
     } else E.tap.style.opacity = 0;
 
     /* onay butonu: önce nabız, sonra "alındı" */
-    const done = t >= 16.20;
+    const done = t >= 17.35;                  // "Çakışma yok" biter 17.25
     E.bkbtn.classList.toggle('done', done);
     E.bkbtn.textContent = done ? '✓ Randevu Alındı' : 'Randevuyu Onayla';
     E.bknote.textContent = done ? 'Onay SMS’i gönderildi' : 'Onay SMS ile anında gönderilir';
-    const bp = p(t, 15.58, .45), dp = p(t, 16.20, .40);
+    const bp = p(t, 15.95, .45), dp = p(t, 17.35, .40);
     let sc2 = 1;
     if (bp > 0 && bp < 1) sc2 = 1 + Math.sin(bp * Math.PI) * .045;
     if (dp > 0 && dp < 1) sc2 = 1 + Math.sin(dp * Math.PI) * .060;
@@ -511,15 +511,15 @@ window.__seek = function(t, frame){
   {
     let cur = null;
     for (const L of LABELS) if (t >= L[0] - .30) cur = L;
-    if (cur && t < 21.28){
+    if (cur && t < 21.88){
       E.labN.textContent = cur[1]; E.labT.textContent = cur[2]; E.labD.textContent = cur[3];
       const a = out(p(t, cur[0] - .30, .42));
-      const b = p(t, 20.72, .34);
+      const b = p(t, 21.30, .34);
       E.lab.style.opacity = (a * (1 - b)).toFixed(3);
       E.lab.style.transform = `translateY(${((1 - a) * 34).toFixed(1)}px)`;
     } else E.lab.style.opacity = 0;
 
-    const sa = out(p(t, 18.30, .45)), sb = p(t, 20.72, .34);
+    const sa = out(p(t, 18.95, .45)), sb = p(t, 21.30, .34);
     E.stamp.style.opacity = (sa * (1 - sb)).toFixed(3);
   }
 
@@ -527,27 +527,27 @@ window.__seek = function(t, frame){
   scene(E.s5, t, S.s5[0], S.s5[1]);
   if (E.s5.style.opacity === '1'){
     const r = R.s5;
-    rise(r[0], t, 21.40, .45);                                   // NORMAL FİYAT
-    E.oldw.style.opacity = out(p(t, 21.72, .40)).toFixed(3);     // 10.000 ₺
-    E.strike.style.width = (io(p(t, 23.15, .45)) * 102).toFixed(1) + '%';
-    const na = out(p(t, 23.85, .40));                            // "sekiz bin" anı
-    const br = 1 + Math.sin(Math.max(0, t - 24.25) * 2.1) * .012;
+    rise(r[0], t, 22.00, .45);                                   // NORMAL FİYAT
+    E.oldw.style.opacity = out(p(t, 22.35, .40)).toFixed(3);     // "Normalde on bin lira" 22.35
+    E.strike.style.width = (io(p(t, 23.60, .45)) * 102).toFixed(1) + '%';   // söz biter 23.50
+    const na = out(p(t, 25.05, .40));                            // "sekiz bin" 25.05
+    const br = 1 + Math.sin(Math.max(0, t - 25.45) * 2.1) * .012;
     E.newv.style.opacity = na.toFixed(3);
     E.newv.style.transform = `scale(${(na < 1 ? 1.24 - .24 * na : br).toFixed(4)})`;
-    rise(r[1], t, 24.60, .45);                                   // %20 indirim
-    rise(r[2], t, 25.08, .45);                                   // sınırlı süre
+    rise(r[1], t, 25.75, .45);                                   // %20 indirim
+    rise(r[2], t, 26.20, .45);                                   // sınırlı süre
   }
 
   /* ================= SAHNE 6 — "Şimdi bize site yaz." */
   scene(E.s6, t, S.s6[0], S.s6[1]);
   if (E.s6.style.opacity === '1'){
     const r = R.s6;
-    rise(r[0], t, 26.28, .45);
-    rise(r[1], t, 26.55, .50);
-    rise(r[2], t, 26.85, .50);
-    $('#s6bar').style.transform = `scaleX(${io(p(t, 27.30, .55)).toFixed(3)})`;
-    rise(r[3], t, 27.70, .45);
-    rise(r[4], t, 28.00, .45);
+    rise(r[0], t, 27.03, .45);
+    rise(r[1], t, 27.30, .50);
+    rise(r[2], t, 27.60, .50);
+    $('#s6bar').style.transform = `scaleX(${io(p(t, 28.05, .55)).toFixed(3)})`;
+    rise(r[3], t, 28.45, .45);
+    rise(r[4], t, 28.75, .45);
   }
 
   /* ================= KESME EFEKTLERİ ================= */

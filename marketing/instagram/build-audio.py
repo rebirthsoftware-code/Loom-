@@ -26,7 +26,7 @@ FFMPEG = "/usr/local/lib/python3.11/dist-packages/imageio_ffmpeg/binaries/ffmpeg
 if not Path(FFMPEG).exists():
     FFMPEG = shutil.which("ffmpeg") or "ffmpeg"
 
-SURE = 29.6          # kurgunun toplam süresi (reels-film.html içindeki DUR)
+SURE = 30.4          # kurgunun toplam süresi (reels-film.html içindeki DUR)
 SR = 48000
 
 # --------------------------------------------------------------------------
@@ -34,23 +34,23 @@ SR = 48000
 # --------------------------------------------------------------------------
 KONUSMA = [
     ("v1.wav",  0.45),   # "Gece yarısı. Müşterin randevu istedi, sen uyuyordun."
-    ("v2.wav",  6.35),   # "Sabah gördüğünde o müşteri çoktan gitmişti."
-    ("v3.wav",  9.55),   # "Peki ya senin siten olsaydı?"
-    ("v4.wav", 12.30),   # "Müşterin siteye girer, boş saati kendisi seçer. Çakışma yok."
-    ("v5.wav", 17.40),   # "Salonuna özel site ve online randevu sistemi."
-    ("v6.wav", 21.60),   # "Normalde on bin lira. Bu ay sekiz bin."
-    ("v7.wav", 26.70),   # "Şimdi bize site yaz."
+    ("v2.wav",  6.95),   # "Sabah gördüğünde o müşteri çoktan gitmişti."
+    ("v3.wav", 10.10),   # "Peki ya senin siten olsaydı?"
+    ("v4.wav", 12.85),   # "Müşterin siteye girer, boş saati kendisi seçer. Çakışma yok."
+    ("v5.wav", 18.00),   # "Salonuna özel site ve online randevu sistemi."
+    ("v6.wav", 22.35),   # "Normalde on bin lira. Bu ay sekiz bin."
+    ("v7.wav", 27.35),   # "Şimdi bize site yaz."
 ]
 
 EFEKT = [
     ("zemin",  0.00),                                        # sürekli dip doku
-    ("savur",  5.02), ("savur", 9.32),                       # sahne kesmeleri
-    ("savur", 21.22), ("savur", 26.12),
-    ("vurus",  2.92),                                        # "SEN UYUYORDUN."
-    ("vurus", 23.82),                                        # 8.000 ₺ ekrana çakılır
-    ("kaydir", 13.58),                                       # site randevu ekranına kayar
-    ("tik",   14.70),                                        # saate dokunuş
-    ("onay",  16.18),                                        # "Randevu alındı"
+    ("savur",  5.47), ("savur", 9.87),                       # sahne kesmeleri
+    ("savur", 21.82), ("savur", 26.87),
+    ("vurus",  3.50),                                        # "SEN UYUYORDUN."
+    ("vurus", 25.02),                                        # 8.000 ₺ ekrana çakılır
+    ("kaydir", 14.13),                                       # site randevu ekranına kayar
+    ("tik",   15.18),                                        # saate dokunuş
+    ("onay",  17.33),                                        # "Randevu alındı"
 ]
 
 # --------------------------------------------------------------------------
