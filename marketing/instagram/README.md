@@ -9,13 +9,41 @@ Tasarım felsefesi: [`TASARIM-FELSEFESI.md`](./TASARIM-FELSEFESI.md)
 
 ---
 
+## Video
+
+| Dosya | Ölçü | Süre |
+|---|---|---|
+| `out/reels-film.mp4` | 1080×1920, H.264, 30 fps | 22 sn |
+
+Reels'e doğrudan yüklenecek film. Kurgu altı bölümden oluşuyor:
+
+| Sn | Bölüm | Ne oluyor |
+|---|---|---|
+| 0.0 – 3.4 | **Kanca** | `23:40` saati. "Müşterin randevu istedi. Sen uyuyordun." |
+| 3.4 – 7.0 | **Problem** | Gelen DM balonu → "Görüldü 09:15" → "Müşteri gitmişti." |
+| 7.0 – 9.3 | **Dönüş** | "Peki ya senin siten olsaydı?" — telefon aşağıdan yükselir |
+| 9.3 – 15.1 | **Ürün** | Site kayar, **randevu ekranı** açılır, saat seçilir, onay butonu atar. Yanında sırayla 4 madde |
+| 15.1 – 18.7 | **Teklif** | 10.000 ₺ üstü çizilir, 8.000 ₺ ekrana çakılır |
+| 18.7 – 22.0 | **Çağrı** | "DM'den «SİTE» yaz" + örnek çalışma adresi |
+
+En ikna edici an 11–14. saniyeler: telefonun içinde gerçekten hizmet seçilip, tarih ve saat
+tıklanıp randevu oluşturuluyor. Karşındaki berber "bu sistem gerçekten çalışıyor" diye
+düşünsün diye o bölüm yavaş ve okunaklı tutuldu.
+
+**Ses:** dosyada sessiz bir ses kanalı var. Yükledikten sonra Instagram içinden trend bir
+müzik ekle — hem eksik ses hissi kalmaz hem de erişime yardımcı olur. Sakin, ritmi orta
+tempolu bir parça seç; kesmeler 3.4 / 7.0 / 15.1 / 18.7. saniyelerde.
+
+**Kapak:** `out/reels-kapak.png` dosyasını kapak olarak seç (Instagram yükleme ekranında
+"Kapağı düzenle" → "Galeriden ekle"). Profil ızgarasında o görünür.
+
 ## Görseller
 
 | Dosya | Ölçü | Nerede kullanılır |
 |---|---|---|
 | `out/story-1.png` | 1080×1920 (9:16) | **Story** — ana teklif. Telefon maketi + 4 madde + fiyat + CTA |
 | `out/story-2.png` | 1080×1920 (9:16) | **Story** — pakette ne var. story-1'den hemen sonra paylaş |
-| `out/reels-kapak.png` | 1080×1920 (9:16) | **Reels** kapağı / ilk kare. Kanca odaklı, en az metin |
+| `out/reels-kapak.png` | 1080×1920 (9:16) | **Reels kapağı.** Videonun kapak karesi olarak kullan |
 | `out/feed-4x5.png` | 1080×1350 (4:5) | **Feed** gönderisi. Akışta en çok yer kaplayan oran |
 
 Hepsi 2x çözünürlükte render alınıp Lanczos ile indirgendi — telefonda kenarlar net çıkar.
@@ -32,8 +60,8 @@ Story'ye **sticker veya link eklerken CTA butonunun üstünü kapatma** — link
 görselin en üstüne veya CTA'nın hemen altına koy.
 
 **Reels** — sağdaki buton kolonu (beğeni/yorum/paylaş) sağ ~180 px'i, alttaki açıklama +
-müzik satırı son ~400 px'i kapatır. `reels-kapak.png` içeriği bu yüzden 1540 px'in
-üstünde bitiyor; alt bölge bilinçli olarak boş.
+müzik satırı son ~400 px'i kapatır. `reels-kapak.png` ve `reels-film.mp4` içeriği bu yüzden
+1450 px'in üstünde bitiyor; alt bölge bilinçli olarak boş.
 
 ---
 
@@ -93,6 +121,7 @@ src/
   story-1.html    story — ana teklif
   story-2.html    story — paket içeriği
   reels-kapak.html reels kapağı
+  reels-film.html  22 sn'lik reels filmi (zaman çizelgesi dosyanın sonundaki script'te)
   feed-4x5.html   feed gönderisi
   fonts/          Big Shoulders · Gloock · IBM Plex Mono · Work Sans (hepsi OFL)
   assets/         endamsince1979.com'dan alınan logo ve dükkân fotoğrafı
@@ -119,14 +148,29 @@ src/
 
 ```bash
 cd marketing/instagram
-node render.mjs              # hepsi
-node render.mjs story-1      # tek dosya
+
+node render.mjs                    # 4 görsel (hepsi)
+node render.mjs story-1            # tek görsel
+
+node render-video.mjs --preview    # filmden kilit kareler → out/preview/
+node render-video.mjs              # 22 sn'lik MP4 (~4 dk sürer)
 ```
 
-Chromium ile 2x render alıp Pillow ile indirger. Gerekenler: Node + Playwright ve
-Python + Pillow. `render.mjs` içindeki Playwright yolu bu ortama göre sabit yazılmış
-(`/opt/node22/lib/node_modules/playwright`); başka makinede çalıştıracaksan
-`import { chromium } from 'playwright'` olarak değiştir.
+Görseller: Chromium ile 2x render alınıp Pillow ile indirgenir.
+Video: `reels-film.html` içindeki `window.__seek(t)` fonksiyonu kare kare çağrılır,
+660 kare doğrudan ffmpeg'e boru ile aktarılır (diske geçici kare yazılmaz).
+Zamanlama gerçek zamana değil `t` değerine bağlı olduğu için render ne kadar yavaş
+olursa olsun sonuç birebir aynı çıkar.
+
+Gerekenler: Node + Playwright, Python + Pillow, libx264 destekli ffmpeg
+(`pip install imageio-ffmpeg` ile gelen sürüm kullanılıyor). Yollar bu ortama göre
+sabit yazılmış — başka makinede `import { chromium } from 'playwright'` ve
+`FFMPEG = 'ffmpeg'` olarak değiştir.
+
+**Kurguyu değiştirmek:** `reels-film.html` sonundaki script'te `S` nesnesi sahne
+sınırlarını, `LABELS` dizisi 4 maddeyi, `CUTS` dizisi kesme anlarını tutar. Süreyi
+`DUR` belirler. Bir sahneyi uzatırsan sonraki sahnelerin başlangıcını ve `DUR`'u da
+kaydır.
 
 ## Lisanslar
 
